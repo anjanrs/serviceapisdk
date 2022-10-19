@@ -107,6 +107,54 @@ try {
 } catch (Exception $e) {
     echo 'Exception when calling CollectionApi->getCollections: ', $e->getMessage(), PHP_EOL;
 }
+
+
+$apiInstance = new I2I\ServiceApi\Api\CollectionApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$email = "email_example"; // string | 
+
+try {
+    $result = $apiInstance->getCompanyCollections($email);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling CollectionApi->getCompanyCollections: ', $e->getMessage(), PHP_EOL;
+}
+
+
+$apiInstance = new I2I\ServiceApi\Api\CollectionApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$email = "email_example"; // string | 
+
+try {
+    $result = $apiInstance->getMyCollections($email);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling CollectionApi->getMyCollections: ', $e->getMessage(), PHP_EOL;
+}
+
+
+$apiInstance = new I2I\ServiceApi\Api\CollectionApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$email = "email_example"; // string | 
+
+try {
+    $result = $apiInstance->getTags($email);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling CollectionApi->getTags: ', $e->getMessage(), PHP_EOL;
+}
 ?>
 ```
 
@@ -119,6 +167,9 @@ Class | Method | HTTP request | Description
 *CollectionApi* | [**getCollection**](docs/Api/CollectionApi.md#getcollection) | **POST** /service/api/v1/collection | Get collection.
 *CollectionApi* | [**getCollectionDocs**](docs/Api/CollectionApi.md#getcollectiondocs) | **POST** /service/api/v1/collectionDocs | Get documents under a collection
 *CollectionApi* | [**getCollections**](docs/Api/CollectionApi.md#getcollections) | **POST** /service/api/v1/collections | Get collections
+*CollectionApi* | [**getCompanyCollections**](docs/Api/CollectionApi.md#getcompanycollections) | **POST** /service/api/v1/companyCollections | Get company collections
+*CollectionApi* | [**getMyCollections**](docs/Api/CollectionApi.md#getmycollections) | **POST** /service/api/v1/myCollections | Get my collections
+*CollectionApi* | [**getTags**](docs/Api/CollectionApi.md#gettags) | **POST** /service/api/v1/tags | Get tags
 
 ## Documentation For Models
 
@@ -129,10 +180,15 @@ Class | Method | HTTP request | Description
  - [CollectionDocsData](docs/Model/CollectionDocsData.md)
  - [Collections](docs/Model/Collections.md)
  - [CollectionsData](docs/Model/CollectionsData.md)
+ - [Tags](docs/Model/Tags.md)
+ - [TagsData](docs/Model/TagsData.md)
  - [Unauthorized](docs/Model/Unauthorized.md)
  - [V1CollectionBody](docs/Model/V1CollectionBody.md)
  - [V1CollectionDocsBody](docs/Model/V1CollectionDocsBody.md)
  - [V1CollectionsBody](docs/Model/V1CollectionsBody.md)
+ - [V1CompanyCollectionsBody](docs/Model/V1CompanyCollectionsBody.md)
+ - [V1MyCollectionsBody](docs/Model/V1MyCollectionsBody.md)
+ - [V1TagsBody](docs/Model/V1TagsBody.md)
 
 ## Documentation For Authorization
 
