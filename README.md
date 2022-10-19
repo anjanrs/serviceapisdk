@@ -64,6 +64,22 @@ $apiInstance = new I2I\ServiceApi\Api\CollectionApi(
     $config
 );
 $email = "email_example"; // string | 
+$collection_id = "collection_id_example"; // string | 
+
+try {
+    $apiInstance->getCollection($email, $collection_id);
+} catch (Exception $e) {
+    echo 'Exception when calling CollectionApi->getCollection: ', $e->getMessage(), PHP_EOL;
+}
+
+
+$apiInstance = new I2I\ServiceApi\Api\CollectionApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$email = "email_example"; // string | 
 
 try {
     $result = $apiInstance->getCollections($email);
@@ -80,13 +96,17 @@ All URIs are relative to */*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+*CollectionApi* | [**getCollection**](docs/Api/CollectionApi.md#getcollection) | **POST** /service/api/v1/collection | Get collection.
 *CollectionApi* | [**getCollections**](docs/Api/CollectionApi.md#getcollections) | **POST** /service/api/v1/collections | Get collections
 
 ## Documentation For Models
 
+ - [Collection](docs/Model/Collection.md)
+ - [CollectionData](docs/Model/CollectionData.md)
  - [Collections](docs/Model/Collections.md)
  - [CollectionsData](docs/Model/CollectionsData.md)
  - [Unauthorized](docs/Model/Unauthorized.md)
+ - [V1CollectionBody](docs/Model/V1CollectionBody.md)
  - [V1CollectionsBody](docs/Model/V1CollectionsBody.md)
 
 ## Documentation For Authorization
