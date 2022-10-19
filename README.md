@@ -67,7 +67,8 @@ $email = "email_example"; // string |
 $collection_id = "collection_id_example"; // string | 
 
 try {
-    $apiInstance->getCollection($email, $collection_id);
+    $result = $apiInstance->getCollection($email, $collection_id);
+    print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling CollectionApi->getCollection: ', $e->getMessage(), PHP_EOL;
 }

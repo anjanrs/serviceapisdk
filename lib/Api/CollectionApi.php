@@ -96,11 +96,12 @@ class CollectionApi
      *
      * @throws \I2I\ServiceApi\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return void
+     * @return \I2I\ServiceApi\Model\Collection
      */
     public function getCollection($email = null, $collection_id = null)
     {
-        $this->getCollectionWithHttpInfo($email, $collection_id);
+        list($response) = $this->getCollectionWithHttpInfo($email, $collection_id);
+        return $response;
     }
 
     /**
@@ -113,11 +114,11 @@ class CollectionApi
      *
      * @throws \I2I\ServiceApi\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \I2I\ServiceApi\Model\Collection, HTTP status code, HTTP response headers (array of strings)
      */
     public function getCollectionWithHttpInfo($email = null, $collection_id = null)
     {
-        $returnType = '';
+        $returnType = '\I2I\ServiceApi\Model\Collection';
         $request = $this->getCollectionRequest($email, $collection_id);
 
         try {
@@ -148,10 +149,32 @@ class CollectionApi
                 );
             }
 
-            return [null, $statusCode, $response->getHeaders()];
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+                if (!in_array($returnType, ['string','integer','bool'])) {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
 
         } catch (ApiException $e) {
             switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\I2I\ServiceApi\Model\Collection',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
                 case 401:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
@@ -207,14 +230,28 @@ class CollectionApi
      */
     public function getCollectionAsyncWithHttpInfo($email = null, $collection_id = null)
     {
-        $returnType = '';
+        $returnType = '\I2I\ServiceApi\Model\Collection';
         $request = $this->getCollectionRequest($email, $collection_id);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
                 function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
+                    $responseBody = $response->getBody();
+                    if ($returnType === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = $responseBody->getContents();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
                 },
                 function ($exception) {
                     $response = $exception->getResponse();
